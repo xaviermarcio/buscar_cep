@@ -13,18 +13,27 @@
         <div class="header">
             <h2>Buscar CEP</h2>
         </div>
-        <form action="#" class="form" id="form">
+        <form action="#" class="form">
             <div class="form-control">
-                <label for="cep">CEP</label>
-                <input type="text" maxlength="9" onkeyup="handleZipCode(event)"/>
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></ion-icon></span>
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" maxlength="9" onkeyup="handleZipCode(event)" placeholder="Digite o seu CEP...">
+                    <div class="btn">
+                        <button type="submit" class="btn-buscar" onclick="buscarCep()">
+                            Buscar
+                        </button>
+                        <button type="submit" class="btn-limpar" onclick="limparForm()">
+                            Limpar
+                        </button>
+                    </div>
+                    <hr>
+                    <p class="texto" id="text"></p>
             </div>
-                <button type="submit" class="btn">Buscar</button>
-            <div class="result">
-                <p>Teste</p>
-            </div>
-        </form>
-    </div>
+        </form>  
+    </div>    
 
-     <script src="js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
