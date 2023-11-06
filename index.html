@@ -6,34 +6,34 @@
     <meta name="description" content="Buscar CEP">
     <meta name="keywords" content="CEP, mascara de CEP, HTML, JavaScript">
     <link rel="stylesheet" href="css/style.css">
+
     <title>Buscar CEP</title>
+
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h2>Buscar CEP</h2>
         </div>
-        <form action="#" class="form">
-            <div class="form-control">
-                <span class="icon"><ion-icon name="home-outline"></ion-icon></ion-icon></span>
+            <form action="#" class="form">
+                <div class="form-control">
+                <span class="icon"><ion-icon name="home-outline">
+                    </ion-icon></ion-icon>
+                </span>
                 <label for="cep">CEP:</label>
-                <input type="text" id="cep" maxlength="9" onkeyup="handleZipCode(event)" placeholder="Digite o seu CEP...">
+                <input type="text" id="cep" maxlength="9" onkeyup="handleZipCode(event)" placeholder="Digite o seu CEP..." oninput="">
                     <div class="btn">
-                        <button type="submit" class="btn-buscar" id="btnValue" onclick="buscarCep()">
-                            Buscar
-                        </button><br/>
-                        <button type="submit" class="btn-limpar" onclick="limparForm()">
-                            Limpar
-                        </button>
+                        <button type="submit" class="btn-buscar" id="btnValue" onclick="buscarCep()">Buscar</button><br/>
+                        <button type="submit" class="btn-limpar" onclick="limparForm()">Limpar</button>
                     </div>
-                    <hr>
+                <hr>
                     <p class="texto" id="text"></p>
-            </div>
-        </form>  
-    </div>    
+                </div>
+            </form>  
+        </div>    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/cep.js"></script>
 </body>
 </html>
