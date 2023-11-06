@@ -1,16 +1,28 @@
 const handleZipCode = (event) => {
   let input = event.target;
   input.value = zipCodeMask(input.value);
-};
+}
 
 const zipCodeMask = (value) => {
   if (!value) return "";
   value = value.replace(/\D/g, "");
   value = value.replace(/(\d{5})(\d)/, "$1-$2");
   return value;
-};
+}
+
 function buscarCep() {
   let input = document.getElementById("cep").value;
+  const errorMessage = document.getElementById("error-message");
+
+  //Verificar se o CEP está vazio
+  if (input.trim() === "") {
+    errorMessage.innerHTML = "Por favor, digite um CEP!";
+    errorMessage.style.color = "red";
+
+    return;
+  }
+
+  errorMessage.textContent = "";
 
   const ajax = new XMLHttpRequest();
   ajax.open("Get", "https://viacep.com.br/ws/" + input + "/json/");
