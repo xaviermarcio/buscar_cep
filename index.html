@@ -18,14 +18,15 @@
             <div class="form-control">
                 <label for="cep">CEP:</label>
                 <div class="input-container">
-                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                     <input type="text" id="cep" maxlength="9" onkeyup="handleZipCode(event)" placeholder="Digite o seu CEP...">
+                    <ion-icon name="home-outline" class="input-icon"></ion-icon>
                 </div>
+                <div class="error-message" id="error-message"></div>
                 <div class="btn-container">
                     <button type="submit" class="btn-buscar" id="btnValue" onclick="buscarCep()">Buscar</button>
                     <button type="submit" class="btn-limpar" onclick="limparForm()">Limpar</button>
                 </div>
-                <hr>
+                <hr class="line">
                 <p class="texto" id="text"></p>
             </div>
         </form>
