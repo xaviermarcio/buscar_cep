@@ -13,9 +13,6 @@ API ViaCEP: utilizada para obter dados dos endereços.
 ## Aprendizados
 Projetos simples como esse são bons para relembrar e aprender coisas novas funcionalidades sobre HTML,CSS e JavaScript.
 
-## Funcionalidades
-Ao difitar o CEP a página retorna as informações correspondentes ao CEP digitado.
-
 ## Feedback
 Se você tiver algum feedback, por favor nos deixe saber por meio de xaviermarcio80@gmail.com
 
