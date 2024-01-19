@@ -7,7 +7,7 @@ Listagem de CEP: exibe o endereço de acordo com o CEP digitado obtido pela API 
 ## Tecnologias utilizadas
 HTML5: linguagem de marcação para estruturar o conteúdo da aplicação.
 CSS3: linguagem de estilo para estilizar a interface do usuário.
-JavaScript: Linguagem de programação que permite adicionar comportamento interativo a uma página web. Pode ser incorporado em documentos HTML para responder a eventos do usuário, manipular elementos da página, realizar requisições assíncronas (AJAX) e muito mais. T
+JavaScript: Linguagem de programação que permite adicionar comportamento interativo a uma página web. Pode ser incorporado em documentos HTML para responder a eventos do usuário, manipular elementos da página, realizar requisições assíncronas (AJAX).
 API ViaCEP: utilizada para obter dados dos endereços.
 
 ## Aprendizados
