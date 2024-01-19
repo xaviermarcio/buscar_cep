@@ -1,31 +1,20 @@
+## Buscar CEP 
+É um projeto que tem como objetivo buscar endereços de acordo com o CEP digitado consumindo a API ViaCEP.
 
-# Tela buscar CEP
+## Funcionalidades
+Listagem de CEP: exibe o endereço de acordo com o CEP digitado obtido pela API ViaCEP.
 
-Mini projeto em front-end usado HTML, CSS e JavaScript. Todas as telas possuem validação back-end com JS.
-## Autores
-
-https://github.com/xaviermarcio
-
-## Instalação
-
-Baixar os arquivos HTML,CSS e JavaScript. Em seguida link os arquivos CSS e JavaScript na página index.html.
-    
-## Rodando localmente
-
-Clone o projeto
-
-```bash
-  https://github.com/xaviermarcio/tela_cadastro_login
-```
-
-Baixe o diretório e execute os arquivos de acordo com o seu editor de código que você usa.
+## Tecnologias utilizadas
+HTML5: linguagem de marcação para estruturar o conteúdo da aplicação.
+CSS3: linguagem de estilo para estilizar a interface do usuário.
+JavaScript: Linguagem de programação que permite adicionar comportamento interativo a uma página web. Pode ser incorporado em documentos HTML para responder a eventos do usuário, manipular elementos da página, realizar requisições assíncronas (AJAX) e muito mais. T
+API ViaCEP: utilizada para obter dados dos endereços.
 
 ## Aprendizados
 Projetos simples como esse são bons para relembrar e aprender coisas novas funcionalidades sobre HTML,CSS e JavaScript.
 
 ## Funcionalidades
 Ao difitar o CEP a página retorna as informações correspondentes ao CEP digitado.
-
 
 ## Feedback
 Se você tiver algum feedback, por favor nos deixe saber por meio de xaviermarcio80@gmail.com
