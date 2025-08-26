@@ -1,41 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Buscar CEP">
-    <meta name="keywords" content="CEP, mascara de CEP, HTML, JavaScript">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="images/correios_logo.jpg">
-
-    <title>Buscar CEP</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar CEP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h2>Buscar CEP</h2>
-        </div>
-        <form action="#" class="form">
-            <div class="form-control">
-                <label for="cep">CEP:</label>
-                <div class="input-container">
-                    <input type="text" id="cep" maxlength="9" onkeyup="handleZipCode(event)" placeholder="Digite o CEP que você deseja buscar...">
-                    <ion-icon name="home-outline" class="input-icon"></ion-icon>
-                </div>
-                <div class="error-message" id="error-message"></div>
-                <div class="btn-container">
-                    <button type="submit" class="btn-buscar" id="btnValue" onclick="buscarCep()">Buscar</button>
-                    <button type="submit" class="btn-limpar" onclick="limparForm()">Limpar</button>
-                </div>
-                <hr class="line">
-                <p class="texto" id="text"></p>
-            </div>
-        </form>
+<body class="bg-gradient-to-r from-blue-500 via-green-400 to-yellow-400 min-h-screen flex items-center justify-center transition">
+
+  <div class="card bg-white shadow-2xl rounded-2xl w-full max-w-md p-6 transition">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-6">
+      <img src="src/img/correios_logo.jpg" alt="Correios" class="w-20 mx-auto mb-2">
+      <h2 class="text-2xl font-bold text-blue-700">Buscar CEP</h2>
     </div>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="js/cep.js"></script>
+    <!-- Botão Dark Mode -->
+    <div class="flex justify-end mb-4">
+      <button onclick="toggleDarkMode()" 
+              class="px-3 py-1 rounded bg-gray-800 text-white text-xs hover:bg-gray-700">
+        🌙 Modo Escuro
+      </button>
+    </div>
+
+    <!-- Formulário -->
+    <form id="cepForm" class="space-y-4">
+      <div>
+        <label for="cep" class="block text-blue-700 font-semibold mb-1">CEP:</label>
+        <input type="text" id="cep" maxlength="9"
+               placeholder="Digite o CEP"
+               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <p id="error-message" class="text-red-600 text-sm mt-1"></p>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" onclick="buscarCep(event)" 
+                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition">
+          Buscar
+        </button>
+        <button type="button" onclick="limparForm(event)" 
+                class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 rounded-lg transition">
+          Limpar
+        </button>
+      </div>
+    </form>
+
+    <!-- Loader -->
+    <div id="loader" class="hidden loader"></div>
+
+    <!-- Resultado -->
+    <div class="mt-6">
+      <p id="text" class="text-blue-700 text-sm leading-6"></p>
+      <button id="copyBtn" onclick="copiarEndereco()" 
+              class="hidden mt-3 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition">
+        Copiar Endereço
+      </button>
+    </div>
+
+    <!-- Histórico -->
+    <div class="mt-6">
+      <h3 class="text-blue-700 font-semibold mb-2">Histórico:</h3>
+      <ul id="history" class="list-disc pl-4 text-sm text-gray-700"></ul>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="src/css/style.css">
+  <script src="src/js/cep.js"></script>
 </body>
 </html>
