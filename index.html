@@ -1,70 +1,236 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buscar CEP</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Consulta de endereços brasileiros via CEP usando a API ViaCEP." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <title>CEP_ — Buscar Endereço</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/css/style.css" />
 </head>
-<body class="bg-gradient-to-r from-blue-500 via-green-400 to-yellow-400 min-h-screen flex items-center justify-center transition">
+<body class="dark" data-theme="dark">
 
-  <div class="card bg-white shadow-2xl rounded-2xl w-full max-w-md p-6 transition">
-    <!-- Cabeçalho -->
-    <div class="text-center mb-6">
-      <img src="src/img/correios_logo.jpg" alt="Correios" class="w-20 mx-auto mb-2">
-      <h2 class="text-2xl font-bold text-blue-700">Buscar CEP</h2>
-    </div>
+  <!-- Skip link acessibilidade -->
+  <a href="#main-content" class="skip-link">Pular para conteúdo</a>
 
-    <!-- Botão Dark Mode -->
-    <div class="flex justify-end mb-4">
-      <button onclick="toggleDarkMode()" 
-              class="px-3 py-1 rounded bg-gray-800 text-white text-xs hover:bg-gray-700">
-        🌙 Modo Escuro
-      </button>
-    </div>
-
-    <!-- Formulário -->
-    <form id="cepForm" class="space-y-4">
-      <div>
-        <label for="cep" class="block text-blue-700 font-semibold mb-1">CEP:</label>
-        <input type="text" id="cep" maxlength="9"
-               placeholder="Digite o CEP"
-               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <p id="error-message" class="text-red-600 text-sm mt-1"></p>
+  <div class="app-wrapper">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="16" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 7l8 6 8-6" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">CEP<span class="brand-accent">_</span></div>
+          <div class="brand-sub">Correios · ViaCEP API</div>
+        </div>
       </div>
 
-      <div class="flex gap-2">
-        <button type="button" onclick="buscarCep(event)" 
-                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition">
-          Buscar
-        </button>
-        <button type="button" onclick="limparForm(event)" 
-                class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 rounded-lg transition">
-          Limpar
+      <div class="header-right">
+        <div class="status-badge" id="status-badge" aria-live="polite">
+          <span class="status-dot"></span>
+          <span class="status-text">online</span>
+        </div>
+        <button class="btn-theme" id="btn-theme" onclick="toggleTheme()" aria-label="Alternar tema">
+          <span id="theme-icon">☀</span>
         </button>
       </div>
-    </form>
+    </header>
 
-    <!-- Loader -->
-    <div id="loader" class="hidden loader"></div>
+    <main id="main-content" class="app-main">
+      <!-- HERO -->
+      <div class="hero">
+        <p class="hero-eyebrow">Consulta de endereço</p>
+        <h1 class="hero-title">Buscar<br><em>CEP</em></h1>
+      </div>
 
-    <!-- Resultado -->
-    <div class="mt-6">
-      <p id="text" class="text-blue-700 text-sm leading-6"></p>
-      <button id="copyBtn" onclick="copiarEndereco()" 
-              class="hidden mt-3 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition">
-        Copiar Endereço
-      </button>
-    </div>
+      <!-- TABS -->
+      <div class="tabs" role="tablist" aria-label="Modos de busca">
+        <button class="tab active" role="tab" aria-selected="true"
+                id="tab-individual" aria-controls="panel-individual"
+                onclick="switchTab('individual', this)">Individual</button>
+        <button class="tab" role="tab" aria-selected="false"
+                id="tab-multiplos" aria-controls="panel-multiplos"
+                onclick="switchTab('multiplos', this)">Múltiplos</button>
+        <button class="tab" role="tab" aria-selected="false"
+                id="tab-historico" aria-controls="panel-historico"
+                onclick="switchTab('historico', this)">Histórico</button>
+      </div>
 
-    <!-- Histórico -->
-    <div class="mt-6">
-      <h3 class="text-blue-700 font-semibold mb-2">Histórico:</h3>
-      <ul id="history" class="list-disc pl-4 text-sm text-gray-700"></ul>
-    </div>
+      <!-- PANEL: INDIVIDUAL -->
+      <section class="panel active" id="panel-individual"
+               role="tabpanel" aria-labelledby="tab-individual">
+
+        <div class="input-group">
+          <label for="cep-input" class="input-label">CEP</label>
+          <div class="input-row">
+            <input
+              type="text"
+              id="cep-input"
+              class="cep-input"
+              maxlength="9"
+              placeholder="00000-000"
+              autocomplete="postal-code"
+              inputmode="numeric"
+              aria-describedby="error-msg"
+              oninput="maskCep(this)"
+              onkeydown="if(event.key==='Enter') buscarIndividual()"
+            />
+            <button class="btn-primary" onclick="buscarIndividual()">
+              Buscar <span aria-hidden="true">→</span>
+            </button>
+            <button class="btn-ghost" onclick="limparIndividual()" aria-label="Limpar campo">
+              ✕
+            </button>
+          </div>
+          <p class="error-msg" id="error-msg" role="alert" aria-live="assertive"></p>
+        </div>
+
+        <div class="loader" id="loader" aria-live="polite" aria-label="Carregando...">
+          <span class="loader-dot"></span>
+          <span class="loader-dot"></span>
+          <span class="loader-dot"></span>
+          <span class="loader-text">consultando ViaCEP...</span>
+        </div>
+
+        <!-- Skeleton loader -->
+        <div class="skeleton-card" id="skeleton-card" aria-hidden="true">
+          <div class="skel-line skel-cep"></div>
+          <div class="skel-grid">
+            <div class="skel-field"><div class="skel-line skel-label"></div><div class="skel-line skel-val"></div></div>
+            <div class="skel-field"><div class="skel-line skel-label"></div><div class="skel-line skel-val"></div></div>
+            <div class="skel-field"><div class="skel-line skel-label"></div><div class="skel-line skel-val"></div></div>
+            <div class="skel-field"><div class="skel-line skel-label"></div><div class="skel-line skel-val"></div></div>
+            <div class="skel-field skel-full"><div class="skel-line skel-label"></div><div class="skel-line skel-val" style="width:60%"></div></div>
+          </div>
+          <div class="skel-line skel-btn"></div>
+        </div>
+
+        <article class="result-card" id="result-card" aria-live="polite">
+          <div class="result-header">
+            <span class="result-cep" id="res-cep"></span>
+            <span class="result-badge" id="res-ibge" title="Código IBGE"></span>
+          </div>
+          <div class="result-grid">
+            <div class="result-field">
+              <span class="field-label">Logradouro</span>
+              <span class="field-value" id="res-log"></span>
+            </div>
+            <div class="result-field">
+              <span class="field-label">Bairro</span>
+              <span class="field-value" id="res-bairro"></span>
+            </div>
+            <div class="result-field">
+              <span class="field-label">Cidade</span>
+              <span class="field-value" id="res-cidade"></span>
+            </div>
+            <div class="result-field">
+              <span class="field-label">Estado</span>
+              <span class="field-value" id="res-uf"></span>
+            </div>
+            <div class="result-field result-field--full">
+              <span class="field-label">Complemento</span>
+              <span class="field-value" id="res-comp"></span>
+            </div>
+            <div class="result-field result-field--full">
+              <span class="field-label">DDD</span>
+              <span class="field-value" id="res-ddd"></span>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button class="btn-copy" id="copy-btn" onclick="copiarEndereco()">
+              <span id="copy-label">[ copiar endereço ]</span>
+            </button>
+            <button class="btn-ghost btn-sm" onclick="compartilhar()" title="Compartilhar">
+              ↗ compartilhar
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- PANEL: MÚLTIPLOS -->
+      <section class="panel" id="panel-multiplos"
+               role="tabpanel" aria-labelledby="tab-multiplos">
+
+        <div class="batch-hint-block">
+          <p class="hint-text">Cole múltiplos CEPs, um por linha. Máximo de 10.</p>
+        </div>
+
+        <textarea
+          class="batch-textarea"
+          id="batch-input"
+          placeholder="70040-020&#10;01310-100&#10;20040-020"
+          aria-label="CEPs para busca em lote"
+          rows="6"
+        ></textarea>
+
+        <div class="input-row" style="margin-top: 0.75rem">
+          <button class="btn-primary btn-block" onclick="buscarBatch()">
+            Buscar todos <span aria-hidden="true">→</span>
+          </button>
+          <button class="btn-ghost" onclick="document.getElementById('batch-input').value=''; document.getElementById('batch-results').innerHTML=''" aria-label="Limpar">✕</button>
+        </div>
+
+        <div class="loader" id="loader-batch" aria-live="polite">
+          <span class="loader-dot"></span>
+          <span class="loader-dot"></span>
+          <span class="loader-dot"></span>
+          <span class="loader-text" id="batch-progress">consultando...</span>
+        </div>
+
+        <div class="batch-export-row" id="batch-export-row" style="display:none">
+          <button class="btn-ghost btn-sm" onclick="exportarCSV()">↓ exportar CSV</button>
+        </div>
+
+        <div class="batch-results" id="batch-results" aria-live="polite"></div>
+      </section>
+
+      <!-- PANEL: HISTÓRICO -->
+      <section class="panel" id="panel-historico"
+               role="tabpanel" aria-labelledby="tab-historico">
+
+        <div class="history-header">
+          <p class="hint-text">Últimas buscas salvas neste navegador.</p>
+          <button class="btn-ghost btn-sm btn-danger" onclick="limparHistorico()">limpar histórico</button>
+        </div>
+
+        <ul class="history-full-list" id="history-full-list" aria-label="Histórico de buscas">
+          <!-- preenchido via JS -->
+        </ul>
+
+        <p class="history-empty" id="history-empty" style="display:none">
+          Nenhuma busca salva ainda.
+        </p>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Dados fornecidos por <a href="https://viacep.com.br" target="_blank" rel="noopener">ViaCEP</a></span>
+      <span class="footer-sep">·</span>
+      <span id="footer-pwa-status"></span>
+    </footer>
   </div>
 
-  <link rel="stylesheet" href="src/css/style.css">
+  <!-- Toast global -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-dot"></span>
+    <span id="toast-msg">Endereço copiado</span>
+  </div>
+
   <script src="src/js/cep.js"></script>
 </body>
 </html>
