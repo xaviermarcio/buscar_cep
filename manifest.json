@@ -1,0 +1,35 @@
+{
+  "name": "CEP_ — Buscar Endereço",
+  "short_name": "CEP_",
+  "description": "Consulta de endereços brasileiros via CEP usando a API ViaCEP.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#e8c547",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "categories": ["utilities"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buscar CEP",
+      "short_name": "Buscar",
+      "description": "Abrir busca individual",
+      "url": "/?tab=individual",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
